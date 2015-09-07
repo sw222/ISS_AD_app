@@ -77,36 +77,36 @@ public class ReceivePager extends BasePager{
         String path = PATH+"/customer/haha";
         AsyncHttpClient client = new AsyncHttpClient();
 
-            client.get(path,null,new JsonHttpResponseHandler(){
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    super.onFailure(statusCode, headers, responseString, throwable);
-                    Toast.makeText(mActivity, "request network failed !", Toast.LENGTH_SHORT).show();
-                }
+        client.get(path,null,new JsonHttpResponseHandler(){
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Toast.makeText(mActivity, "request network failed !", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                     super.onSuccess(statusCode, headers, response);
                     //JSONObject firstEvent = response.get(0);
                     //String tweetText = firstEvent.getString("text");
 
                     // Do something with the response
                     //System.out.println(tweetText);
-                }
+            }
 
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    String address;
-                    try {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                String address;
+                try {
                         address = response.get("Address").toString();
-                    }catch (JSONException e){
+                }catch (JSONException e){
                         //throw new JSONException("json exception !");
                         throw new RuntimeException(e);
-                    }
-                    Toast.makeText(mActivity, "json-->"+address, Toast.LENGTH_SHORT).show();
                 }
-            });
+                Toast.makeText(mActivity, "json-->"+address, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }
