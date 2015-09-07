@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">ADapp</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="drawer_open">打开</string>
+    <string name="drawer_close">关闭</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="planets_array">
+        <item>Home</item>
+        <item>Requisitions</item>
+        <item>Retrieval</item>
+        <item>Purchase</item>
+        <item>Receive</item>
+        <item>Inventory</item>
+        <item>Discrepancy</item>
+    </string-array>
+
+    
+    <string name="title_activity_notification">NotificationActivity</string>
+    <string name="title_activity_add_item">AddItemActivity</string>
+</resources>
