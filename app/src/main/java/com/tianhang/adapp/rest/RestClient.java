@@ -13,7 +13,7 @@ import com.tianhang.adapp.R;
  */
 public class RestClient {
     // base url
-    private static final String BASE_URL = Resources.getSystem().getString(R.string.path); // getResource();//  R.string.path;
+    private static final String BASE_URL = "http://10.10.1.202/Service/MyService.svc";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
