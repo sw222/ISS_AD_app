@@ -12,6 +12,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.tianhang.adapp.R;
 import com.tianhang.adapp.base.BasePager;
+import com.tianhang.adapp.domain.Customer;
 import com.tianhang.adapp.rest.RestClient;
 
 import org.apache.http.Header;
@@ -79,20 +80,17 @@ public class ReceivePager extends BasePager{
 
     public void httpJsonPost(){
 
-
-
         HttpEntity entity;
-
         JSONObject customer = new JSONObject();
-
-        
         try {
             customer.put("Id","1");
             customer.put("Name","2");
             customer.put("Address","3");
             customer.put("Credit","4");
+
             String jsonCustomer = customer.toString();
             entity = new StringEntity(jsonCustomer);
+
             Log.i("tianhang",jsonCustomer);
 
         }catch (JSONException e){

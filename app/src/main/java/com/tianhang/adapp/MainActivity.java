@@ -1,5 +1,7 @@
 package com.tianhang.adapp;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -37,7 +39,7 @@ import com.tianhang.adapp.widget.PagerSlidingTabStrip;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements  SearchView.OnQueryTextListener{
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
    // private ShareActionProvider mShareActionProvider;
@@ -189,6 +191,8 @@ public class MainActivity extends ActionBarActivity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 
+
+
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -264,7 +268,15 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
+        // Add SearchWidget.
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
         SearchView searchView = (SearchView) menu.findItem(R.id.ab_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(this);
 
         // change the text hint color
         // traverse the view to the widget containing the hint text
@@ -305,25 +317,16 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setTitle(mTitle);
     }
 
-    /**
-     * 颜色加深处理
-     *
-     * @param RGBValues
-     *            RGB的值，由alpha（透明度）、red（红）、green（绿）、blue（蓝）构成，
-     *            Android中我们一般使用它的16进制，
-     *            例如："#FFAABBCC",最左边到最右每两个字母就是代表alpha（透明度）、
-     *            red（红）、green（绿）、blue（蓝）。每种颜色值占一个字节(8位)，值域0~255
-     *            所以下面使用移位的方法可以得到每种颜色的值，然后每种颜色值减小一下，在合成RGB颜色，颜色就会看起来深一些了
-     * @return
-     */
-    private int colorBurn(int RGBValues) {
-        int alpha = RGBValues >> 24;
-        int red = RGBValues >> 16 & 0xFF;
-        int green = RGBValues >> 8 & 0xFF;
-        int blue = RGBValues & 0xFF;
-        red = (int) Math.floor(red * (1 - 0.1));
-        green = (int) Math.floor(green * (1 - 0.1));
-        blue = (int) Math.floor(blue * (1 - 0.1));
-        return Color.rgb(red, green, blue);
+    // implement SearchView.OnQueryTextListene
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Toast.makeText(this,"text sunbmit !",Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Toast.makeText(this,"text change !",Toast.LENGTH_SHORT).show();
+        return false;
     }
 }

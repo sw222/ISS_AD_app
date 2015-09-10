@@ -9,7 +9,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="4">
+        android:layout_weight="4"
+        android:layout_marginLeft="20dp">
         <TextView
             android:id="@+id/listview_requisition_item_depa"
             android:layout_width="wrap_content"

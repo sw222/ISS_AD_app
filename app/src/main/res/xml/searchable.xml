@@ -1,0 +1,5 @@
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:hint="search_hint"
+    android:includeInGlobalSearch="false"
+    android:label="search_label"
+    android:searchSettingsDescription="search_global_description" />
