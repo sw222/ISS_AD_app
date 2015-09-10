@@ -5,9 +5,9 @@ package com.tianhang.adapp.domain;
  */
 public class Customer extends java.util.HashMap<String,String>  {
     public Customer(String id, String name, String address, String credit) {
-        put("id", id);
-        put("name", name);
-        put("address", address);
-        put("credit", credit);
+        put("Id", id);
+        put("Name", name);
+        put("Address", address);
+        put("Credit", credit);
     }
 }

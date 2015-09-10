@@ -12,4 +12,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="POST"/>
+    <Button
+        android:id="@+id/id_jsonpost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JsonPOST"/>
 </LinearLayout>

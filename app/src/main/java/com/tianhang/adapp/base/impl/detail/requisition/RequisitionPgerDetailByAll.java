@@ -114,11 +114,28 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textview = new TextView(mActivity);
-            textview.setPadding(20,20,20,20);
-            textview.setTextSize(18);
-            textview.setText(list.get(position));
-            return textview;
+//            TextView textview = new TextView(mActivity);
+//            textview.setPadding(20,20,20,20);
+//            textview.setTextSize(18);
+//            textview.setText(list.get(position));
+//            return textview;
+            View view;
+            if(convertView != null){
+                view = convertView;
+            }else {
+                view = View.inflate(mActivity,R.layout.pager_requisition_item,null);
+            }
+            TextView tv_depa = (TextView)view.findViewById(R.id.listview_requisition_item_depa);
+            TextView tv_requ_id = (TextView)view.findViewById(R.id.listview_requisition_item_requ_id);
+            TextView tv_date = (TextView)view.findViewById(R.id.listview_requisition_item_date);
+            TextView tv_status = (TextView)view.findViewById(R.id.listview_requisition_item_status);
+
+            // get position
+            tv_date.setText("2015-3-9");
+            tv_requ_id.setText("00001");
+            tv_depa.setText("depaA");
+            tv_status.setText("status");
+            return view;
         }
     }
 }

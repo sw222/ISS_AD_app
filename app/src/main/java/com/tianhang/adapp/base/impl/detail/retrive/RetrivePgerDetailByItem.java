@@ -114,11 +114,26 @@ public class RetrivePgerDetailByItem extends BaseDetailPager {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textview = new TextView(mActivity);
-            textview.setPadding(20,20,20,20);
-            textview.setTextSize(18);
-            textview.setText(list.get(position));
-            return textview;
+            View view;
+            if(convertView != null){
+                view = convertView;
+            }else {
+                view = View.inflate(mActivity,R.layout.pager_retrive_item,null);
+            }
+            TextView tv_code = (TextView)view.findViewById(R.id.listview_retrive_item_code);
+            TextView tv_name = (TextView)view.findViewById(R.id.listview_retrive_item_name);
+            TextView tv_amount = (TextView)view.findViewById(R.id.listview_retrive_item_amount);
+            TextView tv_unit = (TextView)view.findViewById(R.id.listview_retrive_item_unit);
+            TextView tv_bin = (TextView)view.findViewById(R.id.listview_retrive_item_bin);
+
+
+            // get position
+            tv_code.setText("00001");
+            tv_name.setText("pen");
+            tv_amount.setText("10");
+            tv_unit.setText("12");
+            tv_bin.setText("A-2");
+            return view;
         }
     }
 
