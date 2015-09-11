@@ -24,4 +24,6 @@
     
     <string name="title_activity_notification">NotificationActivity</string>
     <string name="title_activity_add_item">AddItemActivity</string>
+    <string name="title_activity_search_result">SearchResultActivity</string>
+    <string name="title_activity_retrive_by_depa">RetriveByDepaActivity</string>
 </resources>

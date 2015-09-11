@@ -15,17 +15,23 @@
             android:id="@+id/listview_requisition_item_depa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Depa"/>
+            android:text="Depa"
+            android:textColor="@color/black"
+            android:textSize="15dp"/>
         <TextView
             android:id="@+id/listview_requisition_item_requ_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ID"/>
+            android:text="ID"
+            android:textColor="@color/grey_500"
+            android:textSize="12dp"/>
         <TextView
             android:id="@+id/listview_requisition_item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"/>
+            android:text="Date"
+            android:textColor="@color/grey_500"
+            android:textSize="12dp"/>
 
     </LinearLayout>
     <RelativeLayout
@@ -38,6 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:textSize="17dp"
+            android:textColor="@color/orange_800"/>
     </RelativeLayout>
 </LinearLayout>

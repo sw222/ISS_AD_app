@@ -1,5 +1,6 @@
 package com.tianhang.adapp;
 
+import android.app.Notification;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -320,13 +321,16 @@ public class MainActivity extends ActionBarActivity implements  SearchView.OnQue
     // implement SearchView.OnQueryTextListene
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(this,"text sunbmit !",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"text sunbmit !",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this,SearchResultActivity.class);
+        intent.setAction(Intent.ACTION_SEARCH);
+        startActivity(intent);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Toast.makeText(this,"text change !",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"text change !",Toast.LENGTH_SHORT).show();
         return false;
     }
 }

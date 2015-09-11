@@ -1,15 +1,19 @@
 package com.tianhang.adapp.base.impl.detail.retrive;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.tianhang.adapp.R;
+import com.tianhang.adapp.RetriveByDepaActivity;
 import com.tianhang.adapp.base.BaseDetailPager;
 import com.tianhang.adapp.widget.RefreshListView;
 
@@ -48,11 +52,11 @@ public class RetrivePgerDetailByDepa extends BaseDetailPager {
     public void initData() {
         super.initData();
         for(int i =0;i<30;i++){
-            list.add("listview data ->"+i);
+            list.add("Department"+i);
         }
         // addHeadView must be operated before set adapter
-        View headView = View.inflate(mActivity,R.layout.retrive_header_title_list,null);
-        refreshListView.addHeaderView(headView);
+       // View headView = View.inflate(mActivity,R.layout.retrive_header_title_list,null);
+        //refreshListView.addHeaderView(headView);
 
         adapter = new MyAdapter();
         refreshListView.setAdapter(adapter);
@@ -67,6 +71,15 @@ public class RetrivePgerDetailByDepa extends BaseDetailPager {
             @Override
             public void onLoadingMore() {
                 requestDataFromServer(true);
+            }
+        });
+        refreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(mActivity,"Depatment",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mActivity, RetriveByDepaActivity.class);
+                mActivity.startActivity(intent);
             }
         });
 
