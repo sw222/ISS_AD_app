@@ -237,7 +237,7 @@ public class CaptureActivity extends Activity implements Callback {
 		});
 		builder.setCancelable(false);
 		builder.show();
-
+		// start to result activity
 		// Intent intent = new Intent();
 		// intent.putExtra(QR_RESULT, rawResult.getText());
 		// setResult(RESULT_OK, intent);

@@ -6,7 +6,7 @@
 
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>
-    <string name="path">http://10.10.1.202/Service/MyService.svc</string>
+    <string name="path">http://10.10.1.200/Service/MyService.svc</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

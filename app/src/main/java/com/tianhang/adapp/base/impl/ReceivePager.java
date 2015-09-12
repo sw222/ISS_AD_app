@@ -50,8 +50,8 @@ public class ReceivePager extends BasePager{
             @Override
             public void onClick(View v) {
 
-                //httpGet();
-                httpJsonGet();
+                httpGet();
+                //httpJsonGet();
             }
         });
         btn_post.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +145,7 @@ public class ReceivePager extends BasePager{
     }
 
     public void httpGet(){
-        String path = PATH+"/customer/haha";
+        String path = PATH+"/test/123";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(path, new AsyncHttpResponseHandler() {
 
