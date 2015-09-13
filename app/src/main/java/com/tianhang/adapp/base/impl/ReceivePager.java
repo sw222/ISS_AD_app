@@ -145,7 +145,7 @@ public class ReceivePager extends BasePager{
     }
 
     public void httpGet(){
-        String path = PATH+"/test/123";
+        String path = PATH+"/getAllRequisition";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(path, new AsyncHttpResponseHandler() {
 

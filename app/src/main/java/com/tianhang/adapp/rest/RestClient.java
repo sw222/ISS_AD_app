@@ -16,7 +16,7 @@ import org.apache.http.HttpEntity;
  */
 public class RestClient {
     // base url
-    private static final String BASE_URL = "http://10.10.1.202/Service/MyService.svc";
+    private static final String BASE_URL = "http://10.10.1.200/WcfService/Service.svc";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 

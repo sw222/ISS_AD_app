@@ -3,15 +3,24 @@ package com.tianhang.adapp.base.impl.detail.requisition;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tianhang.adapp.R;
 import com.tianhang.adapp.base.BaseDetailPager;
+import com.tianhang.adapp.domain.RequisitionBean;
+import com.tianhang.adapp.rest.RestClient;
 import com.tianhang.adapp.widget.RefreshListView;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -21,7 +30,7 @@ import java.util.ArrayList;
 public class RequisitionPgerDetailByAll extends BaseDetailPager {
 
     private RefreshListView refreshListView;
-    private ArrayList<String> list = new ArrayList<String>();
+    private ArrayList<RequisitionBean> list = new ArrayList<RequisitionBean>();
     private MyAdapter adapter;
     private Handler handler = new Handler(){
         @Override
@@ -48,7 +57,7 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
     public void initData() {
         super.initData();
         for(int i =0;i<30;i++){
-            list.add("listview data ->"+i);
+            //list.add("listview data ->"+i);
         }
         // addHeadView must be operated before set adapter
         //View headView = View.inflate(mActivity,R.layout.layout_header,null);
@@ -69,7 +78,8 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
                 requestDataFromServer(true);
             }
         });
-
+        //------get------
+        getAllRequisition();
     }
 
     /**
@@ -81,11 +91,11 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
                 SystemClock.sleep(3000);//模拟请求服务器的一个时间长度
 
                 if(isLoadingMore){
-                    list.add("加载更多的数据-1");
-                    list.add("加载更多的数据-2");
-                    list.add("加载更多的数据-3");
+                    //list.add("加载更多的数据-1");
+                   // list.add("加载更多的数据-2");
+                    //list.add("加载更多的数据-3");
                 }else {
-                    list.add(0, "下拉刷新的数据");
+                    //list.add(0, "下拉刷新的数据");
                 }
 
                 //在UI线程更新UI
@@ -114,11 +124,7 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-//            TextView textview = new TextView(mActivity);
-//            textview.setPadding(20,20,20,20);
-//            textview.setTextSize(18);
-//            textview.setText(list.get(position));
-//            return textview;
+
             View view;
             if(convertView != null){
                 view = convertView;
@@ -131,11 +137,52 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
             TextView tv_status = (TextView)view.findViewById(R.id.listview_requisition_item_status);
 
             // get position
-            tv_date.setText("2015-3-9");
-            tv_requ_id.setText("00001");
-            tv_depa.setText("depaA");
-            tv_status.setText("status");
+            tv_date.setText(list.get(position).getRequestDate());
+            tv_requ_id.setText(list.get(position).getRequisitionID());
+            tv_depa.setText(list.get(position).getDepartmentID());
+            tv_status.setText(list.get(position).getStatus());
             return view;
         }
+    }
+
+    public void getAllRequisition(){
+
+        RestClient.get("/getAllRequisition", null, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+
+                String result = new String(bytes);
+                JSONObject jsonObject = new JSONObject();
+
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    for (int j = 0; j < jsonArray.length(); j++) {
+                        JSONObject jObject = new JSONObject(jsonArray.get(j).toString());
+                        RequisitionBean requisitionBean = new RequisitionBean();
+                        requisitionBean.setDepartmentID(jObject.getString("department"));
+                        requisitionBean.setRequisitionID(jObject.getString("requisitionId"));
+                        requisitionBean.setRejectReason(jObject.getString("rejectReason"));
+                        requisitionBean.setStatus(jObject.getString("status"));
+                        requisitionBean.setRequestDate(jObject.getString("requestDate"));
+                        requisitionBean.setUserID(jObject.getString("userId"));
+                        list.add(requisitionBean);
+                        Log.i("bean", requisitionBean.toString());
+                    }
+                } catch (Exception e) {
+                    Log.e("JSON Parser", "Error psrsing data" + e.toString());
+                }
+
+
+                Toast.makeText(mActivity, "result" + result, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                Toast.makeText(mActivity, "request network failed !", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }

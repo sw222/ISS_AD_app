@@ -7,9 +7,11 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tianhang.adapp.R;
 import com.tianhang.adapp.base.BaseDetailPager;
 import com.tianhang.adapp.base.BasePager;
@@ -20,7 +22,13 @@ import com.tianhang.adapp.base.impl.detail.requisition.RequisitionPgerDetailByWa
 import com.tianhang.adapp.base.impl.detail.retrive.RetrivePgerDetailByDepa;
 import com.tianhang.adapp.base.impl.detail.retrive.RetrivePgerDetailByItem;
 import com.tianhang.adapp.domain.NewsBean.NewsMenuBean;
+import com.tianhang.adapp.domain.RequisitionBean;
+import com.tianhang.adapp.rest.RestClient;
 import com.viewpagerindicator.TabPageIndicator;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -69,15 +77,9 @@ public class RequisitionPager extends BasePager implements
 
     @Override
     public void initData() {
+
         Log.i("tianhang", "requisition--->initData--->start");
         DetailPagerList = new ArrayList<BaseDetailPager>();
-
-        // 初始化页签页面列表
-		/*
-		for (NewsMenuTab newsTab : mNewsTabDataList) {
-			TabDetailPager pager = new TabDetailPager(mActivity, newsTab);
-			mNewsTabPagerList.add(pager);
-		}*/
 
         DetailPagerList.add(new RequisitionPgerDetailByAll(mActivity));
         DetailPagerList.add(new RequisitionPgerDetailByPending(mActivity));
@@ -150,12 +152,6 @@ public class RequisitionPager extends BasePager implements
         }
     }
 
-	/*
-	@OnClick(R.id.iv_news_tab_next)
-	public void nextTab(View view) {
-		//Toast.makeText(mActivity,"_"+position,Toast.LENGTH_SHORT).show();
-		mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
-	}*/
 
     @Override
     public void onPageScrollStateChanged(int arg0) {
@@ -167,15 +163,8 @@ public class RequisitionPager extends BasePager implements
 
     @Override
     public void onPageSelected(int arg0) {
-		/*
-		Log.d(TAG, "onPageSelected=" + arg0);
-		MainActivity mainUI = (MainActivity) mActivity;
-		SlidingMenu slidingMenu = mainUI.getSlidingMenu();
-		if (arg0 == 0) {
-			slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		} else {
-			slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);// 设置侧边栏不可用
-		} */
 
     }
+
+
 }
