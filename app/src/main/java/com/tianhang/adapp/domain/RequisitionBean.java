@@ -5,7 +5,8 @@ package com.tianhang.adapp.domain;
  */
 public class RequisitionBean {
     private String requisitionID;
-    private String department;
+    private String departmentID;
+    private String departmentName;
     private String userID;
     private String status;
     private String requestDate;
@@ -14,21 +15,10 @@ public class RequisitionBean {
     public RequisitionBean() {
     }
 
-    @Override
-    public String toString() {
-        return "RequisitionBean{" +
-                "requisitionID='" + requisitionID + '\'' +
-                ", departmentID='" + department + '\'' +
-                ", userID='" + userID + '\'' +
-                ", status='" + status + '\'' +
-                ", requestDate='" + requestDate + '\'' +
-                ", rejectReason='" + rejectReason + '\'' +
-                '}';
-    }
-
-    public RequisitionBean(String requisitionID, String departmentID, String userID, String status, String requestDate, String rejectReason) {
+    public RequisitionBean(String requisitionID, String departmentID, String departmentName, String userID, String status, String requestDate, String rejectReason) {
         this.requisitionID = requisitionID;
-        this.department = departmentID;
+        this.departmentID = departmentID;
+        this.departmentName = departmentName;
         this.userID = userID;
         this.status = status;
         this.requestDate = requestDate;
@@ -40,15 +30,19 @@ public class RequisitionBean {
     }
 
     public String getDepartmentID() {
-        return department;
+        return departmentID;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
     public String getStatus() {
         return status;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 
     public String getRequestDate() {
@@ -64,19 +58,23 @@ public class RequisitionBean {
     }
 
     public void setDepartmentID(String departmentID) {
-        this.department = departmentID;
+        this.departmentID = departmentID;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public void setUserID(String userID) {
         this.userID = userID;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public void setRequestDate(String requestDate) {
         this.requestDate = requestDate;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setRejectReason(String rejectReason) {

@@ -6,6 +6,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.tianhang.adapp.R;
 import com.tianhang.adapp.base.BaseDetailPager;
 import com.tianhang.adapp.domain.RequisitionBean;
 import com.tianhang.adapp.rest.RestClient;
+import com.tianhang.adapp.util.ConvertJSONDate;
 import com.tianhang.adapp.widget.RefreshListView;
 
 import org.apache.http.Header;
@@ -56,15 +58,19 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
     @Override
     public void initData() {
         super.initData();
-        for(int i =0;i<30;i++){
-            //list.add("listview data ->"+i);
-        }
+        
         // addHeadView must be operated before set adapter
         //View headView = View.inflate(mActivity,R.layout.layout_header,null);
         //refreshListView.addHeaderView(headView);
 
         adapter = new MyAdapter();
         refreshListView.setAdapter(adapter);
+        refreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(mActivity,position+"->click",Toast.LENGTH_LONG).show();
+            }
+        });
 
         refreshListView.setOnRefreshListener(new RefreshListView.OnRefreshListener() {
             @Override
@@ -139,7 +145,7 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
             // get position
             tv_date.setText(list.get(position).getRequestDate());
             tv_requ_id.setText(list.get(position).getRequisitionID());
-            tv_depa.setText(list.get(position).getDepartmentID());
+            tv_depa.setText(list.get(position).getDepartmentName());
             tv_status.setText(list.get(position).getStatus());
             return view;
         }
@@ -160,21 +166,21 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
                     for (int j = 0; j < jsonArray.length(); j++) {
                         JSONObject jObject = new JSONObject(jsonArray.get(j).toString());
                         RequisitionBean requisitionBean = new RequisitionBean();
-                        requisitionBean.setDepartmentID(jObject.getString("department"));
+                        requisitionBean.setDepartmentID(jObject.getString("departmentId"));
+                        requisitionBean.setDepartmentName(jObject.getString("deptName"));
                         requisitionBean.setRequisitionID(jObject.getString("requisitionId"));
                         requisitionBean.setRejectReason(jObject.getString("rejectReason"));
                         requisitionBean.setStatus(jObject.getString("status"));
-                        requisitionBean.setRequestDate(jObject.getString("requestDate"));
+                        requisitionBean.setRequestDate(ConvertJSONDate.convert(jObject.getString("requestDate")));
                         requisitionBean.setUserID(jObject.getString("userId"));
                         list.add(requisitionBean);
-                        Log.i("bean", requisitionBean.toString());
+                        //Log.i("bean25", ConvertJSONDate.convert(jObject.getString("requestDate")));
+
                     }
                 } catch (Exception e) {
                     Log.e("JSON Parser", "Error psrsing data" + e.toString());
                 }
-
-
-                Toast.makeText(mActivity, "result" + result, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mActivity, "result" + result, Toast.LENGTH_SHORT).show();
             }
 
             @Override
