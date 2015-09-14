@@ -11,6 +11,7 @@ public class RetriveByDepaActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.animator.right_to_left, R.animator.left_to_right);
         setContentView(R.layout.activity_retrive_by_depa);
     }
 
@@ -34,5 +35,10 @@ public class RetriveByDepaActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.animator.back_enter,R.animator.back_exit);
     }
 }

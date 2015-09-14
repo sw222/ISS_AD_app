@@ -2,16 +2,23 @@ package com.tianhang.adapp;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class RequisitionDetailActivity extends ActionBarActivity {
 
+    private Toolbar mToolbar;
+    private CharSequence mTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.animator.right_to_left, R.animator.left_to_right);
         setContentView(R.layout.activity_requisition_detail);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        setTitle();
     }
 
     @Override
@@ -34,5 +41,14 @@ public class RequisitionDetailActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.animator.back_enter,R.animator.back_exit);
+    }
+    public void setTitle() {
+        mTitle = "Requisition";
+        getSupportActionBar().setTitle(mTitle);
     }
 }

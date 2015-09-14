@@ -66,6 +66,7 @@ public class MainActivity extends ActionBarActivity implements  SearchView.OnQue
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         initViews();
         initData();
@@ -333,4 +334,6 @@ public class MainActivity extends ActionBarActivity implements  SearchView.OnQue
         //Toast.makeText(this,"text change !",Toast.LENGTH_SHORT).show();
         return false;
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.tianhang.adapp.base.impl.detail.requisition;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.lidroid.xutils.ViewUtils;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tianhang.adapp.R;
+import com.tianhang.adapp.RequisitionDetailActivity;
 import com.tianhang.adapp.base.BaseDetailPager;
 import com.tianhang.adapp.domain.RequisitionBean;
 import com.tianhang.adapp.rest.RestClient;
@@ -58,7 +60,7 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
     @Override
     public void initData() {
         super.initData();
-        
+
         // addHeadView must be operated before set adapter
         //View headView = View.inflate(mActivity,R.layout.layout_header,null);
         //refreshListView.addHeaderView(headView);
@@ -68,7 +70,8 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
         refreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(mActivity,position+"->click",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mActivity, RequisitionDetailActivity.class);
+                mActivity.startActivity(intent);
             }
         });
 

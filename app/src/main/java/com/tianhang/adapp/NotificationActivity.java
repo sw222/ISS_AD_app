@@ -39,4 +39,10 @@ public class NotificationActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.animator.back_enter,R.animator.back_exit);
+    }
 }
