@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<!-- expectedDeliveryDate/purchaseDate/status/purchaserId-->
+    <TextView
+        android:id="@+id/tv_expectedDeliveryDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="expectedDeliveryDate"/>
+    <TextView
+        android:id="@+id/tv_purchaseDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="purchaseDate"/>
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="status"/>
+    <TextView
+        android:id="@+id/tv_purchaserId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="purchaserId"/>
+</LinearLayout>

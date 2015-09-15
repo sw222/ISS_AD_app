@@ -37,6 +37,7 @@ public class RetrivePgerDetailByDepa extends BaseDetailPager {
     private RefreshListView refreshListView;
     private ArrayList<String> list = new ArrayList<String>();
     private MyAdapter adapter;
+    JSONArray jsonArray;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -87,6 +88,8 @@ public class RetrivePgerDetailByDepa extends BaseDetailPager {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(mActivity,"Depatment",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(mActivity, RetriveByDepaActivity.class);
+                intent.putExtra("departmentID",getDepartmentIDFromRequest(position-1));
+               Toast.makeText(mActivity, Integer.toString(position), Toast.LENGTH_LONG).show();
                 mActivity.startActivity(intent);
             }
         });
@@ -153,7 +156,7 @@ public class RetrivePgerDetailByDepa extends BaseDetailPager {
                 JSONObject jsonObject = new JSONObject();
 
                 try {
-                    JSONArray jsonArray = new JSONArray(result);
+                    jsonArray = new JSONArray(result);
                     for (int j = 0; j < jsonArray.length(); j++) {
 
                         JSONObject jObject = new JSONObject(jsonArray.get(j).toString());
@@ -176,5 +179,17 @@ public class RetrivePgerDetailByDepa extends BaseDetailPager {
             }
         });
 
+    }
+    public String getDepartmentIDFromRequest(int position){
+
+        String departmentID = "";
+        try {
+            JSONObject jObject = new JSONObject(jsonArray.get(position).toString());
+            departmentID = jObject.getString("departmentId");
+
+        } catch (Exception e) {
+            Log.e("JSON Parser", "Error psrsing data" + e.toString());
+        }
+        return departmentID ;
     }
 }

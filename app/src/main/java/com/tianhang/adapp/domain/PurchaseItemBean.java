@@ -3,14 +3,14 @@ package com.tianhang.adapp.domain;
 /**
  * Created by shenwen on 15/9/15.
  */
-public class purchaseItem111Bean {
+public class PurchaseItemBean {
     private int Itemcode;
     private String Description;
     private int Quantity;
     private int price;
     private int Amount;
 
-    public purchaseItem111Bean(int itemcode, String description, int quantity, int price, int amount) {
+    public PurchaseItemBean(int itemcode, String description, int quantity, int price, int amount) {
         Itemcode = itemcode;
         Description = description;
         Quantity = quantity;

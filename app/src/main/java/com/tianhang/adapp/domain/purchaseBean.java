@@ -3,7 +3,7 @@ package com.tianhang.adapp.domain;
 /**
  * Created by shenwen on 15/9/15.
  */
-public class purchaseBean {
+public class PurchaseBean {
 
     private int purchaserId;
     private int supplierId;
@@ -12,13 +12,16 @@ public class purchaseBean {
     private String expectedDeliveryDate;
     private String status;
 
-    public purchaseBean(int purchaserId, int supplierId, String purchaseDate, String userId, String expectedDeliveryDate, String status) {
+    public PurchaseBean(int purchaserId, int supplierId, String purchaseDate, String userId, String expectedDeliveryDate, String status) {
         this.purchaserId = purchaserId;
         this.supplierId = supplierId;
         this.purchaseDate = purchaseDate;
         this.userId = userId;
         this.expectedDeliveryDate = expectedDeliveryDate;
         this.status = status;
+    }
+
+    public PurchaseBean() {
     }
 
     public int getPurchaserId() {

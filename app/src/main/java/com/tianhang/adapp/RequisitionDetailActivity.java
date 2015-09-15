@@ -43,7 +43,9 @@ public class RequisitionDetailActivity extends ActionBarActivity {
 
         overridePendingTransition(R.animator.right_to_left, R.animator.left_to_right);
         setContentView(R.layout.activity_requisition_detail);
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(mToolbar);
         listView = (ListView)findViewById(R.id.listView);
         listView.setAdapter(new MyAdapter());

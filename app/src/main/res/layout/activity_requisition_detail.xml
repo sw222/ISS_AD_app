@@ -5,7 +5,9 @@
     android:orientation="vertical"
     tools:context="com.tianhang.adapp.RequisitionDetailActivity">
 
-    <include layout="@layout/toolbar" />
+    <include
+
+        layout="@layout/toolbar" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -4,6 +4,7 @@ package com.tianhang.adapp.domain;
  * Created by shenwen on 15/9/15.
  */
 public class discrepancyBean {
+
     private int discrepancyId;
     private String reportDate;
     private String remark;

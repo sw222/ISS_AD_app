@@ -6,13 +6,13 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,15 +24,22 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 import com.lidroid.xutils.ViewUtils;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tianhang.adapp.AddItemActivity;
 import com.tianhang.adapp.R;
 import com.tianhang.adapp.base.BasePager;
 //import com.tianhang.adapp.scan.CaptureActivity;
 //import com.tianhang.adapp.scan.CaptureActivity;
+import com.tianhang.adapp.domain.PurchaseBean;
+import com.tianhang.adapp.rest.RestClient;
 import com.tianhang.adapp.widget.Fab;
 import com.tianhang.adapp.CaptureActivity;
 
-import java.util.List;
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by student on 1/9/15.
@@ -43,11 +50,11 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
 
     private Spinner spinner;
     private SwipeMenuListView smListView;
-    private AppAdapter mAdapter;
-    private int statusBarColor;
-    private List<String> mAppList;
-    String[] ITEMS = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10", "Item 11", "Item 12", "Item 13"};
 
+    private int statusBarColor;
+
+    String[] ITEMS = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10", "Item 11", "Item 12", "Item 13"};
+    private ArrayList<PurchaseBean> purchaseBeanList = new ArrayList<PurchaseBean>();
     public PurchasePager(Activity activity) {
         super(activity);
     }
@@ -155,7 +162,8 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
     @Override
     public void initData() {
         super.initData();
-
+        Log.i("tianhang", "----init data------");
+        getPurchaseOrderList();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_item, ITEMS);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_item, ITEMS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -163,7 +171,7 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
         spinner.setAdapter(adapter);
         // change the spinner color
         spinner.getBackground().setColorFilter(mActivity.getResources().getColor(R.color.blue_400), PorterDuff.Mode.SRC_ATOP);
-        smListView.setAdapter(new AppAdapter());
+        smListView.setAdapter(new MyAdapter());
     }
 
 
@@ -177,21 +185,21 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
         Toast.makeText(mActivity,"open",Toast.LENGTH_SHORT).show();
     }
 
-    class AppAdapter extends BaseAdapter {
+    class MyAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return ITEMS.length;
+            return purchaseBeanList.size();
         }
 
         @Override
         public String getItem(int position) {
-            return mAppList.get(position);
+            return null;
         }
 
         @Override
         public long getItemId(int position) {
-            return position;
+            return 0;
         }
 
         @Override
@@ -199,17 +207,24 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
             View view;
             if (convertView == null) {
                 view = View.inflate(mActivity.getApplicationContext(),
-                        R.layout.item_list_app, null);
+                        R.layout.pager_purchase_item, null);
                 //new ViewHolder(convertView);
             }else {
                 view = convertView;
             }
+            //expectedDeliveryDate/purchaseDate/status/purchaserId
 
-            ImageView iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
-            TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
+            TextView tv_expectedDeliveryDate = (TextView) view.findViewById(R.id.tv_expectedDeliveryDate);
+            TextView tv_purchaseDate = (TextView) view.findViewById(R.id.tv_purchaseDate);
+            TextView tv_status = (TextView) view.findViewById(R.id.tv_status);
+            TextView tv_purchaserId = (TextView) view.findViewById(R.id.tv_purchaserId);
 
-            tv_name.setText(ITEMS[position]);
-
+            tv_expectedDeliveryDate.setText(purchaseBeanList.get(position).getExpectedDeliveryDate());
+            tv_purchaseDate.setText(purchaseBeanList.get(position).getPurchaseDate());
+            tv_status.setText(purchaseBeanList.get(position).getStatus());
+            tv_purchaserId.setText(purchaseBeanList.get(position).getPurchaserId());
+            //tv_name.setText(ITEMS[position]);
+            Log.i("tianhang","----------");
             return view;
         }
     }
@@ -291,5 +306,46 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
             default: ;
         }
         materialSheetFab.hideSheet();
+    }
+
+    public void getPurchaseOrderList(){
+
+        RestClient.get("/getPurchaseOrderList", null, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+
+                String result = new String(bytes);
+                JSONObject jsonObject = new JSONObject();
+
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject jObject = new JSONObject(jsonArray.get(j).toString());
+
+                        PurchaseBean purchaseBean = new PurchaseBean();
+                        purchaseBean.setExpectedDeliveryDate(jObject.getString("expectedDeliveryDate"));
+                        purchaseBean.setPurchaseDate(jObject.getString("purchaseDate"));
+                        purchaseBean.setStatus(jObject.getString("status"));
+                        purchaseBean.setPurchaserId(jObject.getInt("purchaserId"));
+
+                        purchaseBeanList.add(purchaseBean);
+                        //Log.i("bean25", ConvertJSONDate.convert(jObject.getString("requestDate")));
+
+                    }
+                } catch (Exception e) {
+                    Log.e("JSON Parser", "Error psrsing data" + e.toString());
+                }
+                //Toast.makeText(mActivity, "result" + result, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                Toast.makeText(mActivity, "request network failed !", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }
