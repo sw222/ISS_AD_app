@@ -14,6 +14,9 @@ public class RequisitionDetailBean {
     private int number;
     private String photourl;
 
+    public RequisitionDetailBean() {
+    }
+
     public RequisitionDetailBean(String description, String unit, String name, String status, String collectionPoint, String reqDate, int number, String photourl) {
         this.description = description;
         this.unit = unit;

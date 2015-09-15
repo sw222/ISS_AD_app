@@ -2,17 +2,32 @@ package com.tianhang.adapp;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 
 public class RetriveByDepaActivity extends ActionBarActivity {
 
+    private Toolbar mToolbar;
+    private ListView listView;
+    private CharSequence mTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.animator.right_to_left, R.animator.left_to_right);
         setContentView(R.layout.activity_retrive_by_depa);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
+        listView = (ListView)findViewById(R.id.retrive_depa_lv);
+        View headView = View.inflate(this,R.layout.retrive_header_title_list,null);
+        listView.addHeaderView(headView);
+        setTitle();
+
     }
 
     @Override
@@ -40,5 +55,9 @@ public class RetriveByDepaActivity extends ActionBarActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.animator.back_enter,R.animator.back_exit);
+    }
+    public void setTitle() {
+        mTitle = "Department Requisition";
+        getSupportActionBar().setTitle(mTitle);
     }
 }

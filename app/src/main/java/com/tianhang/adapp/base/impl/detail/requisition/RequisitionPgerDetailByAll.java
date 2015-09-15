@@ -36,6 +36,8 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
     private RefreshListView refreshListView;
     private ArrayList<RequisitionBean> list = new ArrayList<RequisitionBean>();
     private MyAdapter adapter;
+    JSONArray jsonArray;
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -71,6 +73,8 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, RequisitionDetailActivity.class);
+                //add requisition ID
+                intent.putExtra("requisitionID",getRequisitionIDFromRequest(position));
                 mActivity.startActivity(intent);
             }
         });
@@ -165,8 +169,9 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
                 JSONObject jsonObject = new JSONObject();
 
                 try {
-                    JSONArray jsonArray = new JSONArray(result);
+                    jsonArray = new JSONArray(result);
                     for (int j = 0; j < jsonArray.length(); j++) {
+
                         JSONObject jObject = new JSONObject(jsonArray.get(j).toString());
                         RequisitionBean requisitionBean = new RequisitionBean();
                         requisitionBean.setDepartmentID(jObject.getString("departmentId"));
@@ -193,5 +198,19 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
 
             }
         });
+    }
+    public String getRequisitionIDFromRequest(int position){
+
+        String RequisitionID = "";
+
+        try {
+            JSONObject jObject = new JSONObject(jsonArray.get(position).toString());
+            RequisitionID = jObject.getString("requisitionId");
+
+        } catch (Exception e) {
+            Log.e("JSON Parser", "Error psrsing data" + e.toString());
+        }
+
+        return RequisitionID ;
     }
 }

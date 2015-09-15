@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,10 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tianhang.adapp.R;
+import com.tianhang.adapp.RequisitionDetailActivity;
 import com.tianhang.adapp.RetriveByDepaActivity;
 import com.tianhang.adapp.base.BaseDetailPager;
+import com.tianhang.adapp.domain.RequisitionDetailBean;
+import com.tianhang.adapp.rest.RestClient;
+import com.tianhang.adapp.util.ConvertJSONDate;
 import com.tianhang.adapp.widget.RefreshListView;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -51,9 +61,7 @@ public class RetrivePgerDetailByDepa extends BaseDetailPager {
     @Override
     public void initData() {
         super.initData();
-        for(int i =0;i<30;i++){
-            list.add("Department"+i);
-        }
+        getDepartmentNameList();
         // addHeadView must be operated before set adapter
        // View headView = View.inflate(mActivity,R.layout.retrive_header_title_list,null);
         //refreshListView.addHeaderView(headView);
@@ -133,5 +141,40 @@ public class RetrivePgerDetailByDepa extends BaseDetailPager {
             textview.setText(list.get(position));
             return textview;
         }
+    }
+
+    public void getDepartmentNameList(){
+        RestClient.get("/getDepartmentNameList", null, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+
+                String result = new String(bytes);
+                JSONObject jsonObject = new JSONObject();
+
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject jObject = new JSONObject(jsonArray.get(j).toString());
+                        list.add(jObject.getString("deptName"));
+                       // list.add(requisitionDetailBean);
+                        //Log.i("bean25", ConvertJSONDate.convert(jObject.getString("requestDate")));
+
+                    }
+                } catch (Exception e) {
+                    Log.e("JSON Parser", "Error psrsing data" + e.toString());
+                }
+                //Toast.makeText(mActivity, "result" + result, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                Toast.makeText(mActivity, "request network failed !", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
 }

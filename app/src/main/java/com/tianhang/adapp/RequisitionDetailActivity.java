@@ -1,5 +1,6 @@
 package com.tianhang.adapp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,15 +32,25 @@ public class RequisitionDetailActivity extends ActionBarActivity {
     private Toolbar mToolbar;
     private CharSequence mTitle;
     private ArrayList<RequisitionDetailBean> list = new ArrayList<RequisitionDetailBean>();
-    private MyAdapter adapter;
+    private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //intent
+        Intent intent = getIntent();
+        String ID = intent.getStringExtra("requisitionID");
+        getAllRequisitionDetail(ID);
+
         overridePendingTransition(R.animator.right_to_left, R.animator.left_to_right);
         setContentView(R.layout.activity_requisition_detail);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        listView = (ListView)findViewById(R.id.listView);
+        listView.setAdapter(new MyAdapter());
         setTitle();
+
+        //Toast.makeText(RequisitionDetailActivity.this, ID, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -99,23 +111,22 @@ public class RequisitionDetailActivity extends ActionBarActivity {
             }else {
                 view = View.inflate(RequisitionDetailActivity.this,R.layout.activity_requisition_detail_item,null);
             }
-            TextView tv_depa = (TextView)view.findViewById(R.id.listview_requisition_item_depa);
-            TextView tv_requ_id = (TextView)view.findViewById(R.id.listview_requisition_item_requ_id);
-            TextView tv_date = (TextView)view.findViewById(R.id.listview_requisition_item_date);
-            TextView tv_status = (TextView)view.findViewById(R.id.listview_requisition_item_status);
+            TextView tv_depa_name = (TextView)view.findViewById(R.id.tv_depa_name);
+            TextView tv_reqDate = (TextView)view.findViewById(R.id.tv_reqDate);
+            TextView tv_number = (TextView)view.findViewById(R.id.tv_number);
+            TextView tv_description = (TextView)view.findViewById(R.id.tv_description);
 
-            // get position
-           // tv_date.setText(list.get(position).getRequestDate());
-            //tv_requ_id.setText(list.get(position).getRequisitionID());
-            //tv_depa.setText(list.get(position).getDepartmentName());
-            //tv_status.setText(list.get(position).getStatus());
+            tv_depa_name.setText(list.get(position).getName());
+            tv_reqDate.setText(list.get(position).getReqDate());
+            tv_number.setText(list.get(position).getNumber()+"");
+            tv_description.setText(list.get(position).getDescription());
             return view;
         }
     }
 
-    public void getAllRequisitionDetail(){
+    public void getAllRequisitionDetail(String rid){
 
-        RestClient.get("/getAllRequisition", null, new AsyncHttpResponseHandler() {
+        RestClient.get("/getRequisitionDetail/"+rid, null, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -126,16 +137,16 @@ public class RequisitionDetailActivity extends ActionBarActivity {
                 try {
                     JSONArray jsonArray = new JSONArray(result);
                     for (int j = 0; j < jsonArray.length(); j++) {
+
                         JSONObject jObject = new JSONObject(jsonArray.get(j).toString());
-                        RequisitionBean requisitionBean = new RequisitionBean();
-                        requisitionBean.setDepartmentID(jObject.getString("departmentId"));
-                        requisitionBean.setDepartmentName(jObject.getString("deptName"));
-                        requisitionBean.setRequisitionID(jObject.getString("requisitionId"));
-                        requisitionBean.setRejectReason(jObject.getString("rejectReason"));
-                        requisitionBean.setStatus(jObject.getString("status"));
-                        requisitionBean.setRequestDate(ConvertJSONDate.convert(jObject.getString("requestDate")));
-                        requisitionBean.setUserID(jObject.getString("userId"));
-                       // list.add(requisitionBean);
+
+                        RequisitionDetailBean requisitionDetailBean = new RequisitionDetailBean();
+                        requisitionDetailBean.setName(jObject.getString("Name"));
+                        requisitionDetailBean.setDescription(jObject.getString("Description"));
+                        requisitionDetailBean.setNumber(jObject.getInt("Number"));
+                        requisitionDetailBean.setReqDate(ConvertJSONDate.convert(jObject.getString("ReqDate")));
+
+                        list.add(requisitionDetailBean);
                         //Log.i("bean25", ConvertJSONDate.convert(jObject.getString("requestDate")));
 
                     }
