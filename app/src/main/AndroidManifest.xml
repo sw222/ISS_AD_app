@@ -58,6 +58,10 @@
             android:name=".RequisitionDetailActivity"
             android:label="@string/title_activity_requisition_detail" >
         </activity>
+        <activity
+            android:name=".PurchaseOrderDetailActivity"
+            android:label="@string/title_activity_purchase_order_detail" >
+        </activity>
     </application>
 
 </manifest>

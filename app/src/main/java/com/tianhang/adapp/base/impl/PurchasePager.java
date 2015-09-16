@@ -1,6 +1,8 @@
 package com.tianhang.adapp.base.impl;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -8,16 +10,19 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+//import com.afollestad.materialdialogs.MaterialDialog;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -27,11 +32,12 @@ import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 import com.lidroid.xutils.ViewUtils;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tianhang.adapp.AddItemActivity;
+import com.tianhang.adapp.PurchaseOrderDetailActivity;
 import com.tianhang.adapp.R;
 import com.tianhang.adapp.base.BasePager;
-//import com.tianhang.adapp.scan.CaptureActivity;
-//import com.tianhang.adapp.scan.CaptureActivity;
+
 import com.tianhang.adapp.domain.PurchaseBean;
+
 import com.tianhang.adapp.rest.RestClient;
 import com.tianhang.adapp.util.ConvertJSONDate;
 import com.tianhang.adapp.widget.Fab;
@@ -52,6 +58,8 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
 
     private Spinner spinner;
     private SwipeMenuListView smListView;
+    private View positiveAction;
+    private JSONArray jsonArray;
 
     private int statusBarColor;
 
@@ -159,8 +167,15 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
         smListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(mActivity.getApplicationContext(), position + "click-->"+position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mActivity,PurchaseOrderDetailActivity.class) ;
+                //Toast.makeText(mActivity.getApplicationContext(), position + "click-->"+position, Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject jObject = new JSONObject(jsonArray.get(position).toString());
+                    intent.putExtra("purchaseID",jObject.getInt("purchaserId"));
+                    mActivity.startActivity(intent);
+                }catch (Exception e){
+                    Log.e("JSON Parser", "Error psrsing data" + e.toString());
+                }
             }
         });
         getPurchaseOrderList();
@@ -191,7 +206,8 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
 
     private void open() {
         // open app
-        Toast.makeText(mActivity,"open",Toast.LENGTH_SHORT).show();
+        showCustomView();
+       // Toast.makeText(mActivity,"open",Toast.LENGTH_SHORT).show();
     }
 
     class MyAdapter extends BaseAdapter {
@@ -328,7 +344,7 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
                 //JSONObject jsonObject = new JSONObject();
 
                 try {
-                    JSONArray jsonArray = new JSONArray(result);
+                    jsonArray = new JSONArray(result);
                     for (int j = 0; j < jsonArray.length(); j++) {
 
                         JSONObject jObject = new JSONObject(jsonArray.get(j).toString());
@@ -338,9 +354,9 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
                         purchaseBean.setPurchaseDate(jObject.getString("purchaseDate"));
                         purchaseBean.setStatus(jObject.getString("status"));
                         purchaseBean.setPurchaserId(jObject.getInt("purchaserId"));
-                       // Log.i("tianhang", purchaseBean.toString());
+                        // Log.i("tianhang", purchaseBean.toString());
                         purchaseBeanList.add(purchaseBean);
-                       // Log.i("bean", purchaseBeanList.size()+"");
+                        // Log.i("bean", purchaseBeanList.size()+"");
 
                     }
                 } catch (Exception e) {
@@ -356,6 +372,21 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
 
             }
         });
+    }
+    private void showCustomView() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity);
+        View convertView = (View) View.inflate(mActivity,R.layout.dialog_custom, null);
+
+        TextView tv_itemcode = (TextView)convertView.findViewById(R.id.tv_itemcode);
+        TextView tv_description = (TextView)convertView.findViewById(R.id.tv_description);
+        TextView tv_quantity = (TextView)convertView.findViewById(R.id.tv_quantity);
+        TextView tv_price = (TextView)convertView.findViewById(R.id.tv_price);
+        TextView tv_amount = (TextView)convertView.findViewById(R.id.tv_amount);
+
+        alertDialog.setView(convertView);
+        alertDialog.setTitle("Order Detail");
+
+        alertDialog.show();
     }
 
 }

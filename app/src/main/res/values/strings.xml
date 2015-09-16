@@ -27,4 +27,5 @@
     <string name="title_activity_search_result">SearchResultActivity</string>
     <string name="title_activity_retrive_by_depa">RetriveByDepaActivity</string>
     <string name="title_activity_requisition_detail">RequisitionDetailActivity</string>
+    <string name="title_activity_purchase_order_detail">PurchaseOrderDetailActivity</string>
 </resources>

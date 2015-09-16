@@ -10,6 +10,9 @@ public class PurchaseItemBean {
     private int price;
     private int Amount;
 
+    public PurchaseItemBean() {
+    }
+
     public PurchaseItemBean(int itemcode, String description, int quantity, int price, int amount) {
         Itemcode = itemcode;
         Description = description;
