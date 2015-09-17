@@ -23,6 +23,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -30,13 +31,21 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tianhang.adapp.camera.CameraManager;
 import com.tianhang.adapp.decoding.CaptureActivityHandler;
 import com.tianhang.adapp.decoding.InactivityTimer;
+import com.tianhang.adapp.domain.PurchaseBean;
+import com.tianhang.adapp.rest.RestClient;
 import com.tianhang.adapp.view.ViewfinderView;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class CaptureActivity extends Activity implements Callback {
 	public static final String QR_RESULT = "RESULT";
@@ -238,10 +247,12 @@ public class CaptureActivity extends Activity implements Callback {
 		builder.setCancelable(false);
 		builder.show();
 		// start to result activity
-		// Intent intent = new Intent();
-		// intent.putExtra(QR_RESULT, rawResult.getText());
-		// setResult(RESULT_OK, intent);
-		// finish();
+		 Intent intent = new Intent(this,ScanResultActivity.class);
+		 intent.putExtra(QR_RESULT, rawResult.getText());
+		 //setResult(RESULT_OK, intent);
+		//finish();
+		startActivity(intent);
+
 	}
 
 	public void restartPreviewAfterDelay(long delayMS) {
@@ -304,5 +315,7 @@ public class CaptureActivity extends Activity implements Callback {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
+
 
 }

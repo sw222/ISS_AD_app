@@ -5,6 +5,8 @@ package com.tianhang.adapp.domain;
  */
 public class itemBean {
 
+
+
     private int itemId;
     private String unit;
     private String categoryName;
@@ -31,6 +33,8 @@ public class itemBean {
         this.companyName = companyName;
     }
 
+    public itemBean() {
+    }
     public int getItemId() {
 
         return itemId;
@@ -119,4 +123,22 @@ public class itemBean {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
+    @Override
+    public String toString() {
+        return "itemBean{" +
+                "itemId=" + itemId +
+                ", unit='" + unit + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", description='" + description + '\'' +
+                ", reorderlevel=" + reorderlevel +
+                ", reorderQty=" + reorderQty +
+                ", balance=" + balance +
+                ", binNumber='" + binNumber + '\'' +
+                ", photourl='" + photourl + '\'' +
+                ", status='" + status + '\'' +
+                ", companyName='" + companyName + '\'' +
+                '}';
+    }
+
 }

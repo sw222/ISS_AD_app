@@ -62,6 +62,10 @@
             android:name=".PurchaseOrderDetailActivity"
             android:label="@string/title_activity_purchase_order_detail" >
         </activity>
+        <activity
+            android:name=".ScanResultActivity"
+            android:label="@string/title_activity_scan_result" >
+        </activity>
     </application>
 
 </manifest>

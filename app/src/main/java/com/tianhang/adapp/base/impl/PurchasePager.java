@@ -34,6 +34,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tianhang.adapp.AddItemActivity;
 import com.tianhang.adapp.PurchaseOrderDetailActivity;
 import com.tianhang.adapp.R;
+import com.tianhang.adapp.ScanResultActivity;
 import com.tianhang.adapp.base.BasePager;
 
 import com.tianhang.adapp.domain.PurchaseBean;
@@ -338,6 +339,12 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
             case R.id.fab_sheet_item_scan:
                 Intent intent2 = new Intent(mActivity, CaptureActivity.class);
                 mActivity.startActivity(intent2);
+                break;
+            case R.id.fab_sheet_item_submit:
+                Intent intent3 = new Intent(mActivity,ScanResultActivity.class);
+                intent3.putExtra(CaptureActivity.QR_RESULT,"1");
+
+                mActivity.startActivity(intent3);
                 break;
             default: ;
         }
