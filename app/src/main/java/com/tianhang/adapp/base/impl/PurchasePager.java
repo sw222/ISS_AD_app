@@ -248,9 +248,20 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
 
             tv_purchaseDate.setText(ConvertJSONDate.convert(purchaseBeanList.get(position).getPurchaseDate()));
             tv_status.setText(purchaseBeanList.get(position).getStatus());
-            tv_purchaserId.setText(purchaseBeanList.get(position).getPurchaserId()+"");
+            tv_purchaserId.setText(purchaseBeanList.get(position).getPurchaserId() + "");
             //tv_name.setText(ITEMS[position]);
-            Log.i("tianhang", "----purchase------");
+            //tv_status.setTextColor(mActivity.getResources().getColor(R.color.light_blue_A400));
+            switch (tv_status.getText().toString().trim()){
+                case "waiting":
+                    tv_status.setTextColor(mActivity.getResources().getColor(R.color.orange_600));
+                    break;
+                case "Confirmed":
+                    tv_status.setTextColor(mActivity.getResources().getColor(R.color.light_blue_A400));
+                    break;
+                case "Canceled":
+                    tv_status.setTextColor(mActivity.getResources().getColor(R.color.green_700));
+                    break;
+            }
 
             return view;
         }
