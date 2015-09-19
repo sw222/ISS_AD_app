@@ -7,7 +7,9 @@
       <module fileurl="file://$PROJECT_DIR$/MaterialDesignDemo/MaterialDesignDemo.iml" filepath="$PROJECT_DIR$/MaterialDesignDemo/MaterialDesignDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeMenuListView-library/SwipeMenuListView-library.iml" filepath="$PROJECT_DIR$/SwipeMenuListView-library/SwipeMenuListView-library.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewPageIndicatorlibrary/ViewPageIndicatorlibrary.iml" filepath="$PROJECT_DIR$/ViewPageIndicatorlibrary/ViewPageIndicatorlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-flat-button-master/android-flat-button-master.iml" filepath="$PROJECT_DIR$/android-flat-button-master/android-flat-button-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-flat-button-master/library/library.iml" filepath="$PROJECT_DIR$/android-flat-button-master/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/material-sheet-fab/material-sheet-fab.iml" filepath="$PROJECT_DIR$/material-sheet-fab/material-sheet-fab.iml" />
     </modules>
   </component>

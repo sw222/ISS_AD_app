@@ -166,7 +166,7 @@ public class RequisitionPgerDetailByAll extends BaseDetailPager {
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
 
                 String result = new String(bytes);
-                JSONObject jsonObject = new JSONObject();
+                //JSONObject jsonObject = new JSONObject();
 
                 try {
                     jsonArray = new JSONArray(result);

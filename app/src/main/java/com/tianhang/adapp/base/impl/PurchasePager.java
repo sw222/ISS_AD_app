@@ -53,7 +53,7 @@ import java.util.ArrayList;
 /**
  * Created by student on 1/9/15.
  */
-public class PurchasePager extends BasePager implements View.OnClickListener {
+public class PurchasePager extends BasePager {
    // private Fab fab;
     private MaterialSheetFab materialSheetFab;
 
@@ -79,7 +79,7 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
         mRootView = view;
         smListView = (SwipeMenuListView)view.findViewById(R.id.listView);
         //fab = (Fab)view.findViewById(R.id.fab);
-        setupFab();
+        //setupFab();
         // step 1. create a MenuCreator
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -273,83 +273,83 @@ public class PurchasePager extends BasePager implements View.OnClickListener {
                 mRootView.getResources().getDisplayMetrics());
     }
 
-    /**
-     * Sets up the Floating action button.
-     */
-    private void setupFab() {
-
-        Fab fab = (Fab) mRootView.findViewById(R.id.fab);
-        // change fab color
-        fab.setRippleColor(mActivity.getResources().getColor(R.color.light_blue_A400));
-        View sheetView = mRootView.findViewById(R.id.fab_sheet);
-        View overlay = mRootView.findViewById(R.id.overlay);
-        int sheetColor = mRootView.getResources().getColor(R.color.background_card);
-        int fabColor = mRootView.getResources().getColor(R.color.theme_accent);
-
-        // Create material sheet FAB
-        materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay, sheetColor, fabColor);
-
-        //materialSheetFab.
-        // Set material sheet event listener
-        materialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
-            @Override
-            public void onShowSheet() {
-                // Save current status bar color
-                statusBarColor = getStatusBarColor();
-                // Set darker status bar color to match the dim overlay
-                //setStatusBarColor(mActivity.getResources().getColor(R.color.theme_primary_dark2));
-                setStatusBarColor(mActivity.getResources().getColor(R.color.light_blue_A400));
-            }
-
-            @Override
-            public void onHideSheet() {
-                // Restore status bar color
-                setStatusBarColor(statusBarColor);
-            }
-        });
-
-        // Set material sheet item click listeners
-        mRootView.findViewById(R.id.fab_sheet_item_add).setOnClickListener(this);
-        mRootView.findViewById(R.id.fab_sheet_item_scan).setOnClickListener(this);
-       // mRootView.findViewById(R.id.fab_sheet_item_photo).setOnClickListener(this);
-        mRootView.findViewById(R.id.fab_sheet_item_submit).setOnClickListener(this);
-    }
-
-    private int getStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return mActivity.getWindow().getStatusBarColor();
-        }
-        return 0;
-    }
-
-    private void setStatusBarColor(int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mActivity.getWindow().setStatusBarColor(color);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        //Toast.makeText(mActivity,"press", Toast.LENGTH_SHORT).show();
-        switch (v.getId()){
-            case R.id.fab_sheet_item_add:
-                Intent intent = new Intent(mActivity, AddItemActivity.class);
-                mActivity.startActivity(intent);
-                break;
-            case R.id.fab_sheet_item_scan:
-                Intent intent2 = new Intent(mActivity, CaptureActivity.class);
-                mActivity.startActivity(intent2);
-                break;
-            case R.id.fab_sheet_item_submit:
-                Intent intent3 = new Intent(mActivity,ScanResultActivity.class);
-                intent3.putExtra(CaptureActivity.QR_RESULT,"1");
-
-                mActivity.startActivity(intent3);
-                break;
-            default: ;
-        }
-        materialSheetFab.hideSheet();
-    }
+//    /**
+//     * Sets up the Floating action button.
+//     */
+//    private void setupFab() {
+//
+//        Fab fab = (Fab) mRootView.findViewById(R.id.fab);
+//        // change fab color
+//        fab.setRippleColor(mActivity.getResources().getColor(R.color.light_blue_A400));
+//        View sheetView = mRootView.findViewById(R.id.fab_sheet);
+//        View overlay = mRootView.findViewById(R.id.overlay);
+//        int sheetColor = mRootView.getResources().getColor(R.color.background_card);
+//        int fabColor = mRootView.getResources().getColor(R.color.theme_accent);
+//
+//        // Create material sheet FAB
+//        materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay, sheetColor, fabColor);
+//
+//        //materialSheetFab.
+//        // Set material sheet event listener
+//        materialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
+//            @Override
+//            public void onShowSheet() {
+//                // Save current status bar color
+//                statusBarColor = getStatusBarColor();
+//                // Set darker status bar color to match the dim overlay
+//                //setStatusBarColor(mActivity.getResources().getColor(R.color.theme_primary_dark2));
+//                setStatusBarColor(mActivity.getResources().getColor(R.color.light_blue_A400));
+//            }
+//
+//            @Override
+//            public void onHideSheet() {
+//                // Restore status bar color
+//                setStatusBarColor(statusBarColor);
+//            }
+//        });
+//
+//        // Set material sheet item click listeners
+//        mRootView.findViewById(R.id.fab_sheet_item_add).setOnClickListener(this);
+//        mRootView.findViewById(R.id.fab_sheet_item_scan).setOnClickListener(this);
+//       // mRootView.findViewById(R.id.fab_sheet_item_photo).setOnClickListener(this);
+//        mRootView.findViewById(R.id.fab_sheet_item_submit).setOnClickListener(this);
+//    }
+//
+//    private int getStatusBarColor() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            return mActivity.getWindow().getStatusBarColor();
+//        }
+//        return 0;
+//    }
+//
+//    private void setStatusBarColor(int color) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            mActivity.getWindow().setStatusBarColor(color);
+//        }
+//    }
+//
+//    @Override
+//    public void onClick(View v) {
+//        //Toast.makeText(mActivity,"press", Toast.LENGTH_SHORT).show();
+//        switch (v.getId()){
+//            case R.id.fab_sheet_item_add:
+//                Intent intent = new Intent(mActivity, AddItemActivity.class);
+//                mActivity.startActivity(intent);
+//                break;
+//            case R.id.fab_sheet_item_scan:
+//                Intent intent2 = new Intent(mActivity, CaptureActivity.class);
+//                mActivity.startActivity(intent2);
+//                break;
+//            case R.id.fab_sheet_item_submit:
+//                Intent intent3 = new Intent(mActivity,ScanResultActivity.class);
+//                intent3.putExtra(CaptureActivity.QR_RESULT,"1");
+//
+//                mActivity.startActivity(intent3);
+//                break;
+//            default: ;
+//        }
+//        materialSheetFab.hideSheet();
+//    }
 
     public void getPurchaseOrderList(){
 

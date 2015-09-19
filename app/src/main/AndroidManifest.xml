@@ -66,6 +66,14 @@
             android:name=".ScanResultActivity"
             android:label="@string/title_activity_scan_result" >
         </activity>
+        <activity
+            android:name=".AddDiscrepancyActivity"
+            android:label="@string/title_activity_add_discrepancy" >
+            <intent-filter>
+                <action android:name="android.intent.action.Discrepancy" />
+                <category android:name="android.intent.category.Discrepancy" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

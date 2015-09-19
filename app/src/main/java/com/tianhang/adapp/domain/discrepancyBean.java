@@ -12,6 +12,9 @@ public class discrepancyBean {
     private int totalPrice;
     private String status;
 
+    public discrepancyBean() {
+    }
+
     public discrepancyBean(int discrepancyId, String reportDate, String remark, String userId, int totalPrice, String status) {
         this.discrepancyId = discrepancyId;
         this.reportDate = reportDate;

@@ -5,8 +5,6 @@ package com.tianhang.adapp.domain;
  */
 public class itemBean {
 
-
-
     private int itemId;
     private String unit;
     private String categoryName;

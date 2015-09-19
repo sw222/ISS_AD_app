@@ -29,4 +29,5 @@
     <string name="title_activity_requisition_detail">RequisitionDetailActivity</string>
     <string name="title_activity_purchase_order_detail">PurchaseOrderDetailActivity</string>
     <string name="title_activity_scan_result">ScanResultActivity</string>
+    <string name="title_activity_add_discrepancy">AddDiscrepancyActivity</string>
 </resources>

@@ -7,40 +7,35 @@
 
     <TextView
         android:id="@+id/listview_retrive_item_code"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="code"
         android:layout_weight="1"
-        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="10dp"/>
     <TextView
         android:id="@+id/listview_retrive_item_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="name"
-        android:layout_weight="2" />
+        android:layout_weight="3" />
     <TextView
         android:id="@+id/listview_retrive_item_amount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="amount"
-        android:layout_weight="2"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_weight="1"
+        />
     <TextView
         android:id="@+id/listview_retrive_item_unit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="unit"
-        android:layout_weight="1"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/red_100"/>
+        android:layout_weight="1" />
     <TextView
         android:id="@+id/listview_retrive_item_bin"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="bin"
-        android:layout_weight="0.4"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/yellow_100"/>
+        android:layout_weight="1" />
 
 </LinearLayout>

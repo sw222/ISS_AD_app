@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+            <TextView
+                android:id="@+id/dispreancyID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Purchaser ID:"
+                android:textColor="@color/grey_400"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_discrepancyID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="purchaserId"
+                android:textColor="@color/black"
+                android:layout_weight="2"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+            <TextView
+                android:id="@+id/remark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remark"
+                android:textColor="@color/grey_400"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_discrepancyRemark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="expectedDeliveryDate"
+                android:textColor="@color/black"
+                android:layout_weight="1.2"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+            <TextView
+                android:id="@+id/tv_discrepancyDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="purchaseDate"
+                android:textColor="@color/black"
+                android:layout_weight="2"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2">
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="status"
+            android:textColor="@color/orange_600"
+            android:textSize="18dp"
+
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+</LinearLayout>
+
+
+    <!-- expectedDeliveryDate/purchaseDate/status/purchaserId-->
+

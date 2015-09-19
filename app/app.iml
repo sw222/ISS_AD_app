@@ -105,6 +105,7 @@
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="module" module-name="SwipeMenuListView-library" exported="" />
     <orderEntry type="module" module-name="ViewPageIndicatorlibrary" exported="" />
+    <orderEntry type="module" module-name="library" exported="" />
     <orderEntry type="module" module-name="MaterialDesign" exported="" />
     <orderEntry type="module" module-name="material-sheet-fab" exported="" />
   </component>

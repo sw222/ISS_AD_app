@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -24,12 +25,22 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
 import com.lidroid.xutils.ViewUtils;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tianhang.adapp.AddItemActivity;
 import com.tianhang.adapp.CaptureActivity;
 import com.tianhang.adapp.R;
 import com.tianhang.adapp.base.BasePager;
+import com.tianhang.adapp.domain.RequisitionBean;
+import com.tianhang.adapp.domain.discrepancyBean;
+import com.tianhang.adapp.rest.RestClient;
+import com.tianhang.adapp.util.ConvertJSONDate;
 import com.tianhang.adapp.widget.Fab;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +51,8 @@ public class DiscrepancyPager extends BasePager implements View.OnClickListener 
     // private Fab fab;
     private MaterialSheetFab materialSheetFab;
     private SwipeMenuListView smListView;
+    private ArrayList<discrepancyBean> list = new ArrayList<discrepancyBean>();
+    private JSONArray jsonArray;
    // private AppAdapter mAdapter;
    // private int statusBarColor;
    // private List<String> mAppList;
@@ -56,7 +69,10 @@ public class DiscrepancyPager extends BasePager implements View.OnClickListener 
         View view = View.inflate(mActivity, R.layout.pager_discrepancy, null);
         mRootView = view;
         smListView = (SwipeMenuListView)view.findViewById(R.id.listView);
+
         setupFab();
+
+        getDiscrepancyListHistory();
 
         // step 1. create a MenuCreator
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -148,6 +164,8 @@ public class DiscrepancyPager extends BasePager implements View.OnClickListener 
         });
 
 
+
+        //smListView.setAdapter(new AppAdapter());
     }
 
     @Override
@@ -156,11 +174,11 @@ public class DiscrepancyPager extends BasePager implements View.OnClickListener 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_item, ITEMS);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_item, ITEMS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner = (Spinner) mRootView.findViewById(R.id.spinner_stationary);
-        spinner.setAdapter(adapter);
+        //spinner = (Spinner) mRootView.findViewById(R.id.spinner_stationary);
+        //spinner.setAdapter(adapter);
         //spinner.setAdapter(adapter);
         // change the spinner color
-        spinner.getBackground().setColorFilter(mActivity.getResources().getColor(R.color.blue_400), PorterDuff.Mode.SRC_ATOP);
+        //spinner.getBackground().setColorFilter(mActivity.getResources().getColor(R.color.blue_400), PorterDuff.Mode.SRC_ATOP);
 
         smListView.setAdapter(new AppAdapter());
     }
@@ -213,6 +231,7 @@ public class DiscrepancyPager extends BasePager implements View.OnClickListener 
         switch (v.getId()){
             case R.id.fab_sheet_item_add:
                 Intent intent = new Intent(mActivity, AddItemActivity.class);
+                intent.putExtra("sign","discrepancy");
                 mActivity.startActivity(intent);
                 break;
             case R.id.fab_sheet_item_scan:
@@ -243,7 +262,7 @@ public class DiscrepancyPager extends BasePager implements View.OnClickListener 
 
         @Override
         public int getCount() {
-            return ITEMS.length;
+            return list.size();
         }
 
         @Override
@@ -263,19 +282,63 @@ public class DiscrepancyPager extends BasePager implements View.OnClickListener 
             View view;
             if (convertView == null) {
                 view = View.inflate(mActivity.getApplicationContext(),
-                        R.layout.item_list_app, null);
-                //new ViewHolder(convertView);
+                        R.layout.pager_discrepancy_list_item, null);
             }else {
                 view = convertView;
             }
 
-            ImageView iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
-            TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
+            TextView tv_discrepancyDate = (TextView) view.findViewById(R.id.tv_discrepancyDate);
+            TextView tv_discrepancyID = (TextView) view.findViewById(R.id.tv_discrepancyID);
+            TextView tv_status = (TextView) view.findViewById(R.id.tv_status);
+            TextView tv_discrepancyRemark = (TextView) view.findViewById(R.id.tv_discrepancyRemark);
 
-            tv_name.setText(ITEMS[position]);
+            tv_discrepancyDate.setText(ConvertJSONDate.convert(list.get(position).getReportDate()));
+            tv_discrepancyID.setText(list.get(position).getDiscrepancyId()+"");
+            tv_status.setText(list.get(position).getStatus());
+            tv_discrepancyRemark.setText(list.get(position).getRemark());
+           // requisitionBean.setRequestDate(ConvertJSONDate.convert(jObject.getString("requestDate")));
 
             return view;
         }
+    }
+
+    public void getDiscrepancyListHistory(){
+
+        RestClient.get("/discrepancyListHistory", null, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+
+                String result = new String(bytes);
+               // JSONObject jsonObject = new JSONObject();
+
+                try {
+                    jsonArray = new JSONArray(result);
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject jObject = new JSONObject(jsonArray.get(j).toString());
+                        discrepancyBean bean = new discrepancyBean();
+                        bean.setRemark(jObject.getString("Remark"));
+                        bean.setReportDate(jObject.getString("reportDate"));
+                        bean.setDiscrepancyId(jObject.getInt("discrepancyId"));
+                        bean.setStatus(jObject.getString("status"));
+                        list.add(bean);
+                        //Log.i("bean25", ConvertJSONDate.convert(jObject.getString("requestDate")));
+
+                    }
+                } catch (Exception e) {
+                    Log.e("JSON Parser", "Error psrsing data" + e.toString());
+                }
+                //Toast.makeText(mActivity, "result" + result, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                Toast.makeText(mActivity, "request network failed !", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
 }
